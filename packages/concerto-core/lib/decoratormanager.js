@@ -439,17 +439,21 @@ class DecoratorManager {
      * @param {ModelManager} modelManager the input model manager
      * @param {object} options - decorator models options
      * @param {boolean} options.removeDecoratorsFromModel - flag to strip out decorators from models
+     * @param {boolean} options.removeVocabDecoratorsFromModel - flag to strip out vocab decorators from models
+     * @param {boolean} options.removeNonVocabDecoratorsFromModel - flag to strip out non-vocab decorators from models
      * @param {string} options.locale - locale for extracted vocabulary set
      * @returns {ExtractDecoratorsResult} - a new model manager with the decorations removed and a list of extracted decorator jsons and vocab yamls
      */
     static extractDecorators(modelManager,options) {
         options = {
             removeDecoratorsFromModel: false,
+            removeVocabDecoratorsFromModel: false,
+            removeNonVocabDecoratorsFromModel: false,
             locale:'en',
             ...options
         };
         const sourceAst = modelManager.getAst(true);
-        const decoratorExtrator = new DecoratorExtractor(options.removeDecoratorsFromModel, options.locale, DCS_VERSION, sourceAst);
+        const decoratorExtrator = new DecoratorExtractor(options, DCS_VERSION, sourceAst);
         const collectionResp = decoratorExtrator.extract();
         return {
             modelManager: collectionResp.updatedModelManager,
