@@ -129,18 +129,23 @@ class DecoratorExtractor {
             Object.keys(vocabObject).forEach(decl =>{
                 if (vocabObject[decl].term){
                     strVoc += `  - ${decl}: ${vocabObject[decl].term}\n`;
-                    const otherProps = Object.keys(vocabObject[decl]).filter((str)=>str !== 'term' && str !== 'propertyVocabs');
+                }
+                const otherProps = Object.keys(vocabObject[decl]).filter((str)=>str !== 'term' && str !== 'propertyVocabs');
+                if(otherProps.length > 0){
+                    if (!vocabObject[decl].term){
+                        strVoc += `  - ${decl}: ${decl}\n`;
+                    }
                     otherProps.forEach(key =>{
                         strVoc += `    ${key}: ${vocabObject[decl][key]}\n`;
                     });
                 }
                 if (vocabObject[decl].propertyVocabs && Object.keys(vocabObject[decl].propertyVocabs).length > 0){
-                    if (!vocabObject[decl].term){
+                    if (!vocabObject[decl].term && otherProps.length === 0){
                         strVoc += `  - ${decl}: ${decl}\n`;
                     }
                     strVoc += '    properties:\n';
                     Object.keys(vocabObject[decl].propertyVocabs).forEach(prop =>{
-                        strVoc += `      - ${prop}: ${vocabObject[decl].propertyVocabs[prop].term}\n`;
+                        strVoc += `      - ${prop}: ${vocabObject[decl].propertyVocabs[prop].term || ''}\n`;
                         const otherProps = Object.keys(vocabObject[decl].propertyVocabs[prop]).filter((str)=>str !== 'term');
                         otherProps.forEach(key =>{
                             strVoc += `        ${key}: ${vocabObject[decl].propertyVocabs[prop][key]}\n`;
