@@ -276,6 +276,7 @@ class DecoratorExtractor {
     /**
      * Filter vocab or non-vocab decorators
      * @param {Object} decorators - the collection of decorators
+     * @private
      */
     filterDecorators(decorators){
         if (this.removeDecoratorsFromModel){

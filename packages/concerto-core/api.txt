@@ -56,12 +56,12 @@ class Concerto {
 }
    + object setCurrentTime() 
 class DecoratorExtractor {
-   + void constructor(boolean,string,string,Object) 
+   + void constructor(object,boolean,boolean,boolean,string,string,Object) 
 }
 class DecoratorManager {
    + ModelManager validate(decoratorCommandSet,ModelFile[]) throws Error
    + ModelManager decorateModels(ModelManager,decoratorCommandSet,object?,boolean?,boolean?,boolean?,boolean?) 
-   + ExtractDecoratorsResult extractDecorators(ModelManager,object,boolean,string) 
+   + ExtractDecoratorsResult extractDecorators(ModelManager,object,boolean,boolean,boolean,string) 
    + void validateCommand(ModelManager,command) 
    + Boolean falsyOrEqual(string||,string[]) 
    + void applyDecorator(decorated,string,newDecorator) 

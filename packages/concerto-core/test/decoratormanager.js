@@ -600,7 +600,7 @@ describe('DecoratorManager', () => {
     });
 
     describe('#extractDecorators', function() {
-        it('should be able to extract decorators and vocabs from a model withoup options', async function() {
+        it('should be able to extract decorators and vocabs from a model without options', async function() {
             const testModelManager = new ModelManager({strict:true,});
             const modelText = fs.readFileSync(path.join(__dirname,'/data/decoratorcommands/extract-test.cto'), 'utf-8');
             testModelManager.addCTOModel(modelText, 'test.cto');
@@ -673,6 +673,40 @@ describe('DecoratorManager', () => {
             const resp = DecoratorManager.extractDecorators( testModelManager);
             const vocab = resp.vocabularies;
             vocab.should.be.deep.equal([]);
+        });
+        it('should be able to extract decorators and vocabs from a model and remove only vocab decorators from model', async function() {
+            const testModelManager = new ModelManager({strict:true,});
+            const modelText = fs.readFileSync(path.join(__dirname,'/data/decoratorcommands/extract-test.cto'), 'utf-8');
+            testModelManager.addCTOModel(modelText, 'test.cto');
+            const options = {
+                removeVocabDecoratorsFromModel:true
+            };
+            const resp = DecoratorManager.extractDecorators( testModelManager, options);
+            const vocab = resp.vocabularies;
+            vocab.should.not.be.null;
+        });
+        it('should be able to extract decorators and vocabs from a model and remove only non-vocab decorators from model', async function() {
+            const testModelManager = new ModelManager({strict:true,});
+            const modelText = fs.readFileSync(path.join(__dirname,'/data/decoratorcommands/extract-test.cto'), 'utf-8');
+            testModelManager.addCTOModel(modelText, 'test.cto');
+            const options = {
+                removeNonVocabDecoratorsFromModel:true
+            };
+            const resp = DecoratorManager.extractDecorators( testModelManager, options);
+            const vocab = resp.vocabularies;
+            vocab.should.not.be.null;
+        });
+        it('should be able to extract decorators and vocabs from a model using remove vocab and non-vocab option', async function() {
+            const testModelManager = new ModelManager({strict:true,});
+            const modelText = fs.readFileSync(path.join(__dirname,'/data/decoratorcommands/extract-test.cto'), 'utf-8');
+            testModelManager.addCTOModel(modelText, 'test.cto');
+            const options = {
+                removeVocabDecoratorsFromModel:true,
+                removeNonVocabDecoratorsFromModel:true
+            };
+            const resp = DecoratorManager.extractDecorators( testModelManager, options);
+            const vocab = resp.vocabularies;
+            vocab.should.not.be.null;
         });
     });
 
